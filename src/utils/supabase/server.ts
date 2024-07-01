@@ -1,4 +1,4 @@
-import { createServerClient } from "@supabase/ssr";
+import { createServerClient } from '@supabase/ssr';
 
 export const createClient = (
   cookies: Partial<{
@@ -11,7 +11,7 @@ export const createClient = (
     {
       cookies: {
         get(name: string) {
-          return cockies[name]
+          return cookies[name];
         },
       },
     },

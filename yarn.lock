@@ -329,28 +329,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supabase/postgrest-js@npm:1.15.6":
-  version: 1.15.6
-  resolution: "@supabase/postgrest-js@npm:1.15.6"
+"@supabase/postgrest-js@npm:1.15.7":
+  version: 1.15.7
+  resolution: "@supabase/postgrest-js@npm:1.15.7"
   dependencies:
     "@supabase/node-fetch": "npm:^2.6.14"
-  checksum: 10c0/be0699ae25867b78d25c7f869b2a7081683fa7278fe5e5d7e89a7327ed68ca2df75bb8c5790b68e53f88ebccb54874e7cc8146d4d0dd456e14fc22dd1f7876d8
+  checksum: 10c0/9ad14708a21dee4f03766e7ce9bb7a68bd0db92ac0ebd86141fbd3e8fa6d304317bce6ffab84b876744b668ee149cdf069bb5e06109795cbe5adcbcb892ef352
   languageName: node
   linkType: hard
 
-"@supabase/realtime-js@npm:2.10.1":
-  version: 2.10.1
-  resolution: "@supabase/realtime-js@npm:2.10.1"
+"@supabase/realtime-js@npm:2.10.2":
+  version: 2.10.2
+  resolution: "@supabase/realtime-js@npm:2.10.2"
   dependencies:
     "@supabase/node-fetch": "npm:^2.6.14"
     "@types/phoenix": "npm:^1.5.4"
     "@types/ws": "npm:^8.5.10"
     ws: "npm:^8.14.2"
-  checksum: 10c0/5528795623b0464c7ce1e86f36732673f923413036a2173e716ababa64bd6fd31e9886c66a14e0102130a14c287c71e66379a3a5caa451e00ea2a5965302c0e8
+  checksum: 10c0/d33bb7c124c5014ad3f308bb9837f74a33e408976595bda2a8955e2685e89654259738cb2409c31a3aef3892d22d3986c2880437083a87f1a47e828dd2f27eb9
   languageName: node
   linkType: hard
 
-"@supabase/ssr@npm:latest":
+"@supabase/ssr@npm:^0.4.0":
   version: 0.4.0
   resolution: "@supabase/ssr@npm:0.4.0"
   dependencies:
@@ -374,17 +374,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supabase/supabase-js@npm:latest":
-  version: 2.44.0
-  resolution: "@supabase/supabase-js@npm:2.44.0"
+"@supabase/supabase-js@npm:^2.44.2":
+  version: 2.44.2
+  resolution: "@supabase/supabase-js@npm:2.44.2"
   dependencies:
     "@supabase/auth-js": "npm:2.64.2"
     "@supabase/functions-js": "npm:2.4.1"
     "@supabase/node-fetch": "npm:2.6.15"
-    "@supabase/postgrest-js": "npm:1.15.6"
-    "@supabase/realtime-js": "npm:2.10.1"
+    "@supabase/postgrest-js": "npm:1.15.7"
+    "@supabase/realtime-js": "npm:2.10.2"
     "@supabase/storage-js": "npm:2.6.0"
-  checksum: 10c0/7b0d06b97e93b3d12973a241ca68588911bc752d45c2290114b94adb5140f533dec4d4e7d9072d64a743f349b0183bb45b421ee8a0e0d0a33f80f31865b709f6
+  checksum: 10c0/49368f03d390c69a8c02d857bf49de50e80f75d3d449e1f096559788c55267391a6683df948bc22f07e8271ff2fc99e624c7c4edd36211d4f49ee693fb4bb4e3
   languageName: node
   linkType: hard
 
@@ -2164,13 +2164,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"https-proxy-agent@npm:^7.0.1, https-proxy-agent@npm:^7.0.2":
+"https-proxy-agent@npm:^7.0.1":
   version: 7.0.4
   resolution: "https-proxy-agent@npm:7.0.4"
   dependencies:
     agent-base: "npm:^7.0.2"
     debug: "npm:4"
   checksum: 10c0/bc4f7c38da32a5fc622450b6cb49a24ff596f9bd48dcedb52d2da3fa1c1a80e100fb506bd59b326c012f21c863c69b275c23de1a01d0b84db396822fdf25e52b
+  languageName: node
+  linkType: hard
+
+"https-proxy-agent@npm:^7.0.2":
+  version: 7.0.5
+  resolution: "https-proxy-agent@npm:7.0.5"
+  dependencies:
+    agent-base: "npm:^7.0.2"
+    debug: "npm:4"
+  checksum: 10c0/2490e3acec397abeb88807db52cac59102d5ed758feee6df6112ab3ccd8325e8a1ce8bce6f4b66e5470eca102d31e425ace904242e4fa28dbe0c59c4bafa7b2c
   languageName: node
   linkType: hard
 
@@ -3028,8 +3038,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nextjs-blog-chatbot@workspace:."
   dependencies:
-    "@supabase/ssr": "npm:latest"
-    "@supabase/supabase-js": "npm:latest"
+    "@supabase/ssr": "npm:^0.4.0"
+    "@supabase/supabase-js": "npm:^2.44.2"
     "@types/node": "npm:^20"
     "@types/react": "npm:^18"
     "@types/react-dom": "npm:^18"
@@ -3044,6 +3054,7 @@ __metadata:
     prettier-plugin-tailwindcss: "npm:^0.6.5"
     react: "npm:^18"
     react-dom: "npm:^18"
+    react-icons: "npm:^5.2.1"
     supabase: "npm:1.178.2"
     tailwind-merge: "npm:^2.3.0"
     tailwindcss: "npm:^3.4.1"
@@ -3587,6 +3598,15 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: 10c0/a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "react-icons@npm:5.2.1"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/9d52b975afaf27dab07dcaefd50497ba43cc57076fc26ccac5142965e01c7fd0c503a62ea31c3bb710e0b2959a4620c2fed12c3c86960ad8ceb63de7f0085f3a
   languageName: node
   linkType: hard
 

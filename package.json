@@ -7,15 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "genTypes": "supabase gen types typescript --project-id sylbkzvylrzgcuoyxqnj > database.types.ts"
+    "genTypes": "npx supabase gen types typescript --project-id sylbkzvylrzgcuoyxqnj > src/types/supabase.ts"
   },
   "dependencies": {
-    "@supabase/ssr": "latest",
-    "@supabase/supabase-js": "latest",
+    "@supabase/ssr": "^0.4.0",
+    "@supabase/supabase-js": "^2.44.2",
     "class-variance-authority": "^0.7.0",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^5.2.1",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
