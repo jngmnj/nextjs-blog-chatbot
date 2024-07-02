@@ -1,8 +1,5 @@
 import { cva } from '@/utils/style';
 import { createClient } from '@/utils/supabase/client';
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
 
 const supabase = createClient();
 
