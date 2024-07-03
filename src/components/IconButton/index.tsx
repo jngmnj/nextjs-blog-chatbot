@@ -3,7 +3,7 @@ import { ComponentPropsWithoutRef, createElement, ElementType } from 'react';
 import { IconType } from 'react-icons';
 
 type IconButtonProps<Component extends ElementType> =
-  ComponentPropsWithoutRef<'button'> & {
+  ComponentPropsWithoutRef<Component> & {
     Icon: IconType;
     iconClassName?: string;
     className?: string;

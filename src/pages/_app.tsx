@@ -1,6 +1,6 @@
-import Footer from '@/components/footer';
-import Header from '@/components/header';
-import Sidebar from '@/components/sidebar';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import Sidebar from '@/components/Sidebar';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
