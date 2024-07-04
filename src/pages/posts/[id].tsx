@@ -1,3 +1,4 @@
+import { createClient } from '@/utils/supabase/server';
 import { GetServerSideProps } from 'next';
 
 type PostProps = {
@@ -14,8 +15,15 @@ const Post = ({ id }: PostProps) => {
 
 export default Post;
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, req }) => {
   const { id } = query;
+
+  const supabase = createClient(req.cookies);
+
+  const response = await supabase.from("Post").select("*");
+  
+  console.log(response);
+  
   return {
     props: {
       id,
