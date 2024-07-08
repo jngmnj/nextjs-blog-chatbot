@@ -5,6 +5,16 @@ import withTM from 'next-transpile-modules';
 /**  @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'sylbkzvylrzgcuoyxqnj.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
+  },
 };
 
 const withRemoveImports = removeImports();

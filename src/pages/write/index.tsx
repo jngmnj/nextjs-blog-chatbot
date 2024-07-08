@@ -1,7 +1,8 @@
-import { MarkdownEditor, MarkdownViewer } from '@/components/Markdown';
+import { MarkdownEditor } from '@/components/Markdown';
 import { createClient } from '@/utils/supabase/server';
 import { GetServerSideProps } from 'next';
-import { useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import { FormEvent, useRef, useState } from 'react';
 import ReactSelect from 'react-select';
 
 type WriteProps = {
@@ -10,16 +11,48 @@ type WriteProps = {
 };
 
 const Write = ({ existingTags, existingCategories }: WriteProps) => {
+  const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [tags, setTags] = useState('[]');
   const [content, setContent] = useState('');
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // 일반적으로는 요청을할때 json 형태로 보내면되는데
+    // file, 이미지는 전달이 안돼서 formdata를 활용함
+    const formData = new FormData();
+
+    // 각각 요소 append
+    formData.append('title', title);
+    formData.append('category', category);
+    formData.append('tags', tags);
+    formData.append('content', content);
+
+    // 이미지 파일이 있으면 preview image도 만듦
+    if (fileRef.current?.files?.[0]) {
+      formData.append('preview_image', fileRef.current.files[0]);
+    }
+
+    const response = await fetch('/api/posts', {
+      method: 'POST',
+      // headers: {
+      //   'Content-Type': 'multipart/form-data',
+      // },
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    // post성공시 해당 post로 redirect
+    if (data.id) router.push(`/posts/${data.id}`);
+  };
+
   return (
     <div className="container mx-auto flex flex-col px-4 pb-20 pt-12">
       <h1 className="mb-8 text-2xl font-medium">글쓰기</h1>
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3">
           <input
             type="text"
@@ -55,8 +88,11 @@ const Write = ({ existingTags, existingCategories }: WriteProps) => {
             }
             isMulti
           />
-          <MarkdownEditor height={500} />
-          <MarkdownViewer />
+          <MarkdownEditor
+            height={500}
+            value={content}
+            onChange={(s) => setContent(s ?? '')}
+          />
         </div>
         <button
           type="submit"
