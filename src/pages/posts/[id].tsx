@@ -1,6 +1,7 @@
 import { MarkdownViewer } from '@/components/Markdown';
 import { Post } from '@/types';
 import { createClient } from '@/utils/supabase/server';
+import { format } from 'date-fns';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -36,7 +37,7 @@ const Post = ({
           </Link>
         ))}
         <div className="text-sm">
-          {new Date(created_at).toLocaleDateString()}
+          {format(new Date(created_at), 'yyyy년 M월 d일 HH:mm')}
         </div>
       </div>
       {preview_image_url && (
