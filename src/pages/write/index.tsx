@@ -1,19 +1,36 @@
 import { MarkdownEditor } from '@/components/Markdown';
-import { createClient } from '@/utils/supabase/server';
-import { GetServerSideProps } from 'next';
+import { createClient } from '@/utils/supabase/client';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { FormEvent, useRef, useState } from 'react';
 import ReactSelect from 'react-select';
 
-type WriteProps = {
-  existingTags: string[];
-  existingCategories: string[];
-};
+const supabase = createClient();
 
-const Write = ({ existingTags, existingCategories }: WriteProps) => {
+const Write = () => {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState('');
+
+  // react-query 
+  const {data: existingCategories} = useQuery({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const { data } = await supabase.from('Post').select('category');
+      return Array.from(new Set(data?.map((d) => d.category)));
+    }
+  });
+
+  const {data: existingTags} = useQuery({
+    queryKey: ['tags'],
+    queryFn: async () => {
+      const { data } = await supabase.from('Post').select('tags');
+      return Array.from(
+        new Set(data?.flatMap((d) => JSON.parse(d.tags)))
+      );
+    }
+  });
+
   const [category, setCategory] = useState('');
   const [tags, setTags] = useState('[]');
   const [content, setContent] = useState('');
@@ -69,7 +86,7 @@ const Write = ({ existingTags, existingCategories }: WriteProps) => {
             ref={fileRef}
           />
           <ReactSelect
-            options={existingCategories.map((category) => ({
+            options={(existingCategories ?? []).map((category) => ({
               label: category,
               value: category,
             }))}
@@ -78,7 +95,7 @@ const Write = ({ existingTags, existingCategories }: WriteProps) => {
             onChange={(e) => e && setCategory(e?.value)}
           />
           <ReactSelect
-            options={existingTags.map((tag) => ({
+            options={(existingTags ?? []).map((tag) => ({
               label: tag,
               value: tag,
             }))}
@@ -106,20 +123,3 @@ const Write = ({ existingTags, existingCategories }: WriteProps) => {
 };
 
 export default Write;
-
-export const getServerSideProps: GetServerSideProps<WriteProps> = async ({
-  req,
-}) => {
-  const supabase = createClient(req.cookies);
-
-  const { data } = await supabase.from('Post').select('category, tags');
-
-  return {
-    props: {
-      existingCategories: Array.from(new Set(data?.map((d) => d.category))),
-      existingTags: Array.from(
-        new Set(data?.flatMap((d) => JSON.parse(d.tags))),
-      ),
-    },
-  };
-};
