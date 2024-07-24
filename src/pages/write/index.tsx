@@ -1,3 +1,4 @@
+import Input from '@/components/Input';
 import { MarkdownEditor } from '@/components/Markdown';
 import { createClient } from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
@@ -9,6 +10,8 @@ const supabase = createClient();
 
 const Write = () => {
   const router = useRouter();
+
+  const titleRef = useRef<HTMLInputElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState('');
 
@@ -39,10 +42,16 @@ const Write = () => {
     e.preventDefault();
     // 일반적으로는 요청을할때 json 형태로 보내면되는데
     // file, 이미지는 전달이 안돼서 formdata를 활용함
+
+    if (!titleRef.current?.value || titleRef.current.value.length === 0) return alert('제목을 입력해주세요.');
+    if (category.length === 0) return alert('카테고리를 선택해주세요.');
+    if (tags.length === 0) return alert('태그를 입력해주세요.');
+    if (content.length === 0) return alert('내용을 입력해주세요.');
+
     const formData = new FormData();
 
     // 각각 요소 append
-    formData.append('title', title);
+    formData.append('title', titleRef.current?.value ?? '');
     formData.append('category', category);
     formData.append('tags', tags);
     formData.append('content', content);
@@ -57,6 +66,10 @@ const Write = () => {
       // headers: {
       //   'Content-Type': 'multipart/form-data',
       // },
+      //  bad content-type header, no multipart boundary 에러 발생 문제
+      // 파트별로 구분자가 돼야하는 문자열은 파트안의 내용과 동일 하면 안됨
+      // 지우고 되는 이유: 성공 요청 처리됨 
+
       body: formData,
     });
 
@@ -71,18 +84,15 @@ const Write = () => {
       <h1 className="mb-8 text-2xl font-medium">글쓰기</h1>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3">
-          <input
+          <Input
             type="text"
             placeholder="제목"
-            className="rounded-md border border-gray-300 p-2 transition-all hover:border-gray-400"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            ref={titleRef}
           />
-          <input
+          <Input
             type="file"
             // 이미지파일만 받음
             accept="imgage/*"
-            className="rounded-md border border-gray-300 p-2 transition-all hover:border-gray-400"
             ref={fileRef}
           />
           <ReactSelect

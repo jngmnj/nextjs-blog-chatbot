@@ -13,6 +13,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Post> | StorageError,
 ) {
+  if (req.method !== 'POST') return res.status(405).end();
   const form = formidable();
 
   // formdata에 있는 fields와 files이 return됨
