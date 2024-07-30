@@ -8,7 +8,10 @@ export default function Home() {
   const {data: posts} = useQuery({
     queryKey: ['posts'],
     queryFn: async () => {
-      const { data } = await supabase.from('Post').select('*').order('created_at', { ascending: false });
+      const { data } = await supabase
+        .from('Post')
+        .select('*')
+        .order('created_at', { ascending: false });
       if(!data) return [];
       return data;
     }

@@ -6,6 +6,10 @@ import { useRouter } from 'next/router';
 import { FormEvent, useRef, useState } from 'react';
 import ReactSelect from 'react-select';
 
+// type WriteProps = {
+//   existingTags: string[];
+//   existingCategories: string[];
+// }
 const supabase = createClient();
 
 const Write = () => {
