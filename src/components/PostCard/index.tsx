@@ -13,7 +13,7 @@ const PostCard: FC<PostCardProps> = ({
   id,
   title,
   category,
-  tags,
+  // tags,
   content,
   created_at,
   preview_image_url,
@@ -33,7 +33,7 @@ const PostCard: FC<PostCardProps> = ({
       </div>
       <div className="p-2">
         <span className="text-xs py-1 px-2 bg-slate-100 rounded-md mb-2">{category}</span>
-        <h2 className="text-lg font-medium mb-3">{title}</h2>
+        <h2 className="text-lg font-medium mb-3">{id}</h2>
         <p className="line-clamp-3 text-sm text-gray-500">{content}</p>
         <div className="mt-4 text-sm text-gray-500">
           <span className="mx-1">
