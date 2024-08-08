@@ -1,7 +1,7 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { type NextRequest, NextResponse } from "next/server";
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { NextResponse, type NextRequest } from 'next/server';
 
-export const updateSession = async (request: NextRequest) => {
+export const createClient = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
   // Feel free to remove once you have Supabase connected.
   try {
@@ -42,7 +42,7 @@ export const updateSession = async (request: NextRequest) => {
             // If the cookie is removed, update the cookies for the request and response
             request.cookies.set({
               name,
-              value: "",
+              value: '',
               ...options,
             });
             response = NextResponse.next({
@@ -52,7 +52,7 @@ export const updateSession = async (request: NextRequest) => {
             });
             response.cookies.set({
               name,
-              value: "",
+              value: '',
               ...options,
             });
           },
