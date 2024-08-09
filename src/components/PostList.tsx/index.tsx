@@ -1,22 +1,18 @@
-import { cn } from "@/utils/style";
-import { createClient } from "@/utils/supabase/client";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { cn } from '@/utils/style';
+import { createClient } from '@/utils/supabase/client';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { FC, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import PostCard from "../PostCard";
+import PostCard from '../PostCard';
 
 const supabase = createClient();
 
 type PostListProps = {
-    category?: string;
-    tag?: string;
-    className?: string;
-}
-const PostList: FC<PostListProps> = ({
-    category,
-    tag,
-    className,
-}) => {
+  category?: string;
+  tag?: string;
+  className?: string;
+};
+const PostList: FC<PostListProps> = ({ category, tag, className }) => {
   const { ref, inView } = useInView(); // observing할 요소에 ref걸기
   const {
     data: postPages,
@@ -24,13 +20,13 @@ const PostList: FC<PostListProps> = ({
     hasNextPage,
   } = useInfiniteQuery({
     queryKey: ['posts'],
-    queryFn: async ({ pageParam }) => {
-        let request = supabase.from('Post').select('*');
-        if (category) request = request.eq('category', category);
-        if (tag) request = request.like('tags', `%${tag}%`);
+    queryFn: async ({ pageParam = 0 }) => {
+      let request = supabase.from('Post').select('*');
+      if (category) request = request.eq('category', category);
+      if (tag) request = request.like('tags', `%${tag}%`);
 
       const { data } = await request
-        .range(pageParam, pageParam + 9)
+        .range(pageParam, pageParam + 4)
         .order('created_at', { ascending: false });
 
       // Supabase에서 받은 데이터가 없을 경우
@@ -43,7 +39,7 @@ const PostList: FC<PostListProps> = ({
       // 반환된 데이터의 길이를 이용해 다음 페이지 파라미터를 결정
       return {
         posts: data,
-        nextPage: data.length === 10 ? pageParam + 10 : null,
+        nextPage: data.length === 5 ? pageParam + 5 : null,
       };
     },
     initialPageParam: 0,
