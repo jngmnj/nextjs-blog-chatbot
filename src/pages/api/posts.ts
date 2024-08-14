@@ -5,13 +5,9 @@ import formidable from 'formidable';
 import { readFileSync } from 'fs';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-type Data = {
-  name: string;
-};
-
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Post> | StorageError,
+  res: NextApiResponse<Post | StorageError>,
 ) {
   if (req.method !== 'POST') return res.status(405).end();
   const form = formidable();

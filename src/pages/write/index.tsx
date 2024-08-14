@@ -1,7 +1,7 @@
+import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { MarkdownEditor } from '@/components/Markdown';
-import { createClient } from '@/utils/supabase/client';
-import { useQuery } from '@tanstack/react-query';
+import { useCategories, useTags } from '@/utils/hooks';
 import { useRouter } from 'next/router';
 import { FormEvent, useRef, useState } from 'react';
 import ReactSelect from 'react-select';
@@ -10,7 +10,7 @@ import ReactSelect from 'react-select';
 //   existingTags: string[];
 //   existingCategories: string[];
 // }
-const supabase = createClient();
+// const supabase = createClient();
 
 const Write = () => {
   const router = useRouter();
@@ -19,24 +19,10 @@ const Write = () => {
   const fileRef = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState('');
 
-  // react-query 
-  const {data: existingCategories} = useQuery({
-    queryKey: ['categories'],
-    queryFn: async () => {
-      const { data } = await supabase.from('Post').select('category');
-      return Array.from(new Set(data?.map((d) => d.category)));
-    }
-  });
+  // react-query
+  const { data: existingCategories } = useCategories();
 
-  const {data: existingTags} = useQuery({
-    queryKey: ['tags'],
-    queryFn: async () => {
-      const { data } = await supabase.from('Post').select('tags');
-      return Array.from(
-        new Set(data?.flatMap((d) => JSON.parse(d.tags)))
-      );
-    }
-  });
+  const { data: existingTags } = useTags();
 
   const [category, setCategory] = useState('');
   const [tags, setTags] = useState('[]');
@@ -47,7 +33,8 @@ const Write = () => {
     // 일반적으로는 요청을할때 json 형태로 보내면되는데
     // file, 이미지는 전달이 안돼서 formdata를 활용함
 
-    if (!titleRef.current?.value || titleRef.current.value.length === 0) return alert('제목을 입력해주세요.');
+    if (!titleRef.current?.value || titleRef.current.value.length === 0)
+      return alert('제목을 입력해주세요.');
     if (category.length === 0) return alert('카테고리를 선택해주세요.');
     if (tags.length === 0) return alert('태그를 입력해주세요.');
     if (content.length === 0) return alert('내용을 입력해주세요.');
@@ -72,7 +59,7 @@ const Write = () => {
       // },
       //  bad content-type header, no multipart boundary 에러 발생 문제
       // 파트별로 구분자가 돼야하는 문자열은 파트안의 내용과 동일 하면 안됨
-      // 지우고 되는 이유: 성공 요청 처리됨 
+      // 지우고 되는 이유: 성공 요청 처리됨
 
       body: formData,
     });
@@ -84,15 +71,11 @@ const Write = () => {
   };
 
   return (
-    <div className="container mx-auto flex flex-col px-4 pb-20 pt-12">
+    <div className="container flex flex-col pb-20 pt-12">
       <h1 className="mb-8 text-2xl font-medium">글쓰기</h1>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3">
-          <Input
-            type="text"
-            placeholder="제목"
-            ref={titleRef}
-          />
+          <Input type="text" placeholder="제목" ref={titleRef} />
           <Input
             type="file"
             // 이미지파일만 받음
@@ -125,12 +108,9 @@ const Write = () => {
             onChange={(s) => setContent(s ?? '')}
           />
         </div>
-        <button
-          type="submit"
-          className="mt-4 w-full rounded-md bg-gray-800 py-2 text-white"
-        >
+        <Button type="submit" className="mt-4">
           작성하기
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -1,3 +1,4 @@
+import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { createClient } from '@/utils/supabase/client';
 import { UserResponse } from '@supabase/supabase-js';
@@ -35,7 +36,7 @@ const Admin = () => {
   }, []);
 
   return (
-    <div className="container mx-auto flex flex-col px-4 pb-20 pt-12">
+    <div className="container flex flex-col pb-20 pt-12">
       {!!userResponse?.data.user ? (
         <div className="flex items-center justify-between gap-4">
           <div>
@@ -47,24 +48,26 @@ const Admin = () => {
             </p>
           </div>
           <div className="flex gap-2">
-            <button
+            <Button
+              type="button"
               onClick={async () => {
                 await supabase.auth.signOut();
                 router.push('/');
               }}
-              className="rounded-md bg-gray-800 px-2 py-2 text-white"
+              className="px-2 py-2"
             >
               로그아웃
-            </button>
-            <button
+            </Button>
+            <Button
+              type="button"
               onClick={() => {
                 router.push('/write');
               }}
-              className="flex items-center gap-1 rounded-md border border-black bg-white px-2 py-2 text-black"
+              className="flex items-center gap-1 whitespace-nowrap border border-black bg-white text-black hover:bg-gray-200"
             >
               <BsPencilSquare />
               글작성
-            </button>
+            </Button>
           </div>
         </div>
       ) : (
@@ -75,12 +78,9 @@ const Admin = () => {
               <Input type="text" placeholder="이메일" ref={emailRef} />
               <Input type="password" placeholder="비밀번호" ref={passwordRef} />
             </div>
-            <button
-              type="submit"
-              className="mt-4 w-full rounded-md bg-gray-800 py-2 text-white"
-            >
+            <Button type="submit" className="mt-4">
               로그인
-            </button>
+            </Button>
           </form>
         </div>
       )}
