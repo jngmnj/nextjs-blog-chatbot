@@ -14,23 +14,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method !== 'GET') return res.status(405).end(); // 개발을 위해 임시로 get method 사용
+  if (req.method !== 'POST') return res.status(405).end(); // 개발을 위해 임시로 get method 사용
 
-  const messages: ChatCompletionMessageParam[] = [];
+  const messages = req.body.messages as ChatCompletionMessageParam[];
 
   const response = await openai.chat.completions.create({
-    // model: 'gpt-4o-2024-05-13',
     model: 'gpt-4o-mini-2024-07-18',
-    messages: [
-      {
-        role: 'system',
-        content: '너는 친절한 챗봇이야.',
-      },
-      {
-        role: 'user',
-        content: '너는 누구니?',
-      },
-    ],
+    messages,
   });
 
   console.log(response);
