@@ -1,6 +1,7 @@
+'use client';
+
 import IconButton from '@/components/IconButton';
 import Message, { MessageProps } from '@/components/Message';
-import { Post } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
@@ -14,6 +15,7 @@ import {
 } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import Button from '../Button';
+import { PostCardProps } from '../PostCard';
 
 const SearchPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -80,22 +82,34 @@ const SearchPage = () => {
   );
 
   const messagePropsList = useMemo(() => {
-    let posts: Post[] = [];
-    const result = messageParams.reduce<MessageProps[]>(
-      (acc, cur) => {
-        if (cur.role === 'function' && cur.content) {
-          posts = [];
-        }
+    let posts: Omit<PostCardProps, 'className'>[] = [];
 
-        return result;
-      },
-      [messageParams],
-    );
+    const result = messageParams.reduce<MessageProps[]>((acc, cur) => {
+      if (cur.role === 'function' && cur.content) {
+        posts.push(JSON.parse(cur.content) as Omit<PostCardProps, 'className'>);
+      }
 
-    return messageParams.filter(
-      (param): param is MessageProps =>
-        param.role === 'assistant' || param.role === 'user',
-    );
+      if (cur.role === 'user') {
+        posts = [];
+        return [...acc, cur as MessageProps];
+      }
+
+      if (cur.role === 'assistant') {
+        const newResult = [
+          ...acc,
+          {
+            ...cur,
+            posts: [...posts],
+          } as unknown as MessageProps,
+        ];
+        posts = [];
+        return newResult;
+      }
+
+      return acc;
+    }, []);
+
+    return result;
   }, [messageParams]);
 
   const handleReset = useCallback(() => {

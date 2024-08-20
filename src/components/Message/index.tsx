@@ -6,9 +6,10 @@ import PostCard, { PostCardProps } from '../PostCard';
 export type MessageProps = {
   content: string;
   role: 'user' | 'assistant';
-  posts?: Omit<PostCardProps[], 'className'>[];
+  posts?: Omit<PostCardProps, 'className'>[];
 };
 const Message: FC<MessageProps> = ({ content, role, posts }) => {
+  console.log('Message:', posts);
   return (
     <div
       className={cn('p-4 lg:p-6', role === 'user' ? 'bg-white' : 'bg-gray-100')}
@@ -24,7 +25,11 @@ const Message: FC<MessageProps> = ({ content, role, posts }) => {
           {posts && posts.length > 0 && (
             <div className="mt-4 flex justify-start">
               {posts.map((post) => (
-                <PostCard key={post.id} {...post} />
+                <PostCard
+                  {...post}
+                  key={post.id}
+                  className="max-w-[300px] border"
+                />
               ))}
             </div>
           )}
