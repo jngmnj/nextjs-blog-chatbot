@@ -12,6 +12,7 @@ import {
   useState,
 } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
+import Button from '../Button';
 
 const SearchPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -84,6 +85,13 @@ const SearchPage = () => {
     );
   }, [messageParams]);
 
+  const handleReset = useCallback(() => {
+    if (window.confirm('대화를 초기화 하시겠습니까?')) {
+      setMessageParams([]);
+      localStorage.removeItem('messages');
+    }
+  }, []);
+
   return (
     <div className="flex flex-1 flex-col">
       <div className="flex-1">
@@ -93,10 +101,10 @@ const SearchPage = () => {
         ))}
         {isPending && <Message content="생각중..." role="assistant" />}
       </div>
-      <div className="container mx-auto p-4 pb-12">
+      <div className="container mx-auto flex items-center gap-3 p-4 pb-12">
         <form
           onSubmit={handleSubmit}
-          className="flex items-center rounded-md border"
+          className="flex flex-1 items-center rounded-md border"
         >
           <input
             ref={inputRef}
@@ -105,6 +113,9 @@ const SearchPage = () => {
           />
           <IconButton Icon={AiOutlineSearch} type="submit" />
         </form>
+        <Button className="block w-[120px]" type="button" onClick={handleReset}>
+          대화 초기화
+        </Button>
       </div>
     </div>
   );
