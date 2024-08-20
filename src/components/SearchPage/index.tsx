@@ -1,5 +1,6 @@
 import IconButton from '@/components/IconButton';
 import Message, { MessageProps } from '@/components/Message';
+import { Post } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
@@ -79,6 +80,18 @@ const SearchPage = () => {
   );
 
   const messagePropsList = useMemo(() => {
+    let posts: Post[] = [];
+    const result = messageParams.reduce<MessageProps[]>(
+      (acc, cur) => {
+        if (cur.role === 'function' && cur.content) {
+          posts = [];
+        }
+
+        return result;
+      },
+      [messageParams],
+    );
+
     return messageParams.filter(
       (param): param is MessageProps =>
         param.role === 'assistant' || param.role === 'user',

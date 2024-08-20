@@ -52,22 +52,21 @@ const Write = () => {
       formData.append('preview_image', fileRef.current.files[0]);
     }
 
-    const response = await fetch('/api/posts', {
-      method: 'POST',
-      // headers: {
-      //   'Content-Type': 'multipart/form-data',
-      // },
-      //  bad content-type header, no multipart boundary 에러 발생 문제
-      // 파트별로 구분자가 돼야하는 문자열은 파트안의 내용과 동일 하면 안됨
-      // 지우고 되는 이유: 성공 요청 처리됨
+    try {
+      const response = await fetch('/api/posts', {
+        method: 'POST',
+        body: formData,
+      });
 
-      body: formData,
-    });
+      // const data = await response.json();
+      const data = await response.json();
 
-    const data = await response.json();
-
-    // post성공시 해당 post로 redirect
-    if (data.id) router.push(`/posts/${data.id}`);
+      // post성공시 해당 post로 redirect
+      if (data.id) router.push(`/posts/${data.id}`);
+    } catch (error) {
+      console.error('Error creating post:', error);
+      alert('글 작성에 실패했습니다.');
+    }
   };
 
   return (

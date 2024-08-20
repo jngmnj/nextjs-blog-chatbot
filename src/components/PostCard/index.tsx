@@ -1,13 +1,13 @@
-import { Post } from "@/types";
-import { cn } from "@/utils/style";
-import { format } from "date-fns";
-import Image from "next/image";
-import Link from "next/link";
-import { FC } from "react";
+import { Post } from '@/types';
+import { cn } from '@/utils/style';
+import { format } from 'date-fns';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FC } from 'react';
 
-type PostCardProps = Omit<Post, 'tags'> & {
-    className?: string;
-}
+export type PostCardProps = Omit<Post, 'tags'> & {
+  className?: string;
+};
 
 const PostCard: FC<PostCardProps> = ({
   id,
@@ -32,8 +32,10 @@ const PostCard: FC<PostCardProps> = ({
         />
       </div>
       <div className="p-2">
-        <span className="text-xs py-1 px-2 bg-slate-100 rounded-md mb-2">{category}</span>
-        <h2 className="text-lg font-medium mb-3">{id}</h2>
+        <span className="mb-2 rounded-md bg-slate-100 px-2 py-1 text-xs">
+          {category}
+        </span>
+        <h2 className="mb-3 text-lg font-medium">{title}</h2>
         <p className="line-clamp-3 text-sm text-gray-500">{content}</p>
         <div className="mt-4 text-sm text-gray-500">
           <span className="mx-1">
