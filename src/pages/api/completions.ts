@@ -12,7 +12,7 @@ type CompletoinsResponse = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse<CompletoinsResponse>,
 ) {
   if (req.method !== 'POST') return res.status(405).end(); // 개발을 위해 임시로 get method 사용
 
@@ -20,7 +20,7 @@ export default async function handler(
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4o-mini-2024-07-18',
-    messages,
+    messages: [{ role: 'system', content: '' }, ...messages],
   });
 
   console.log(response);

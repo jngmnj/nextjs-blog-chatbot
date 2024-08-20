@@ -6,7 +6,7 @@ import { ChatCompletionMessageParam } from 'openai/resources/index.mjs';
 import { FormEvent, useCallback, useMemo, useRef, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 
-const index = () => {
+const Search = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [messageParams, setMessageParams] = useState<
     ChatCompletionMessageParam[]
@@ -66,9 +66,11 @@ const index = () => {
   return (
     <div className="flex flex-1 flex-col">
       <div className="flex-1">
+        <Message content="무엇이든 물어보세요!" role="assistant" />
         {messagePropsList.map((props, index) => (
           <Message {...props} key={index} />
         ))}
+        {isPending && <Message content="생각중..." role="assistant" />}
       </div>
       <div className="container mx-auto p-4 pb-12">
         <form
@@ -87,4 +89,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Search;
