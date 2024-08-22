@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from './src/utils/supabase/middleware';
+import { createClient } from './utils/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  const { supabase, response } = await createClient(request);
-
   console.log('middleware!');
+  const { supabase, response } = createClient(request);
 
   const {
     data: { user },
@@ -19,5 +18,5 @@ export async function middleware(request: NextRequest) {
 
 // write일때만 작동 -> 안됨.. .
 export const config = {
-  matcher: '/write*',
+  matcher: '/write',
 };

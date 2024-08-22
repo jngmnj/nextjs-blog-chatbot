@@ -17,7 +17,6 @@ const Write = () => {
 
   const titleRef = useRef<HTMLInputElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
-  const [title, setTitle] = useState('');
 
   // react-query
   const { data: existingCategories } = useCategories();
@@ -82,6 +81,7 @@ const Write = () => {
             ref={fileRef}
           />
           <ReactSelect
+            instanceId={'category'}
             options={(existingCategories ?? []).map((category) => ({
               label: category,
               value: category,
@@ -91,6 +91,7 @@ const Write = () => {
             onChange={(e) => e && setCategory(e?.value)}
           />
           <ReactSelect
+            instanceId={'tags'}
             options={(existingTags ?? []).map((tag) => ({
               label: tag,
               value: tag,

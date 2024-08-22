@@ -40,6 +40,7 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
         <Link
           href={`/categories/${category}`}
           className="w-48 font-medium text-gray-600 hover:underline"
+          key={category}
         >
           {category}
         </Link>
