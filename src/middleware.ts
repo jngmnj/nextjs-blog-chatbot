@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from './utils/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  console.log('middleware!');
   const { supabase, response } = createClient(request);
 
   const {
@@ -10,10 +9,8 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (user?.role !== 'authenticated')
+    // console.log("You're not authenticated, redirecting to /admin");
     return NextResponse.redirect(new URL('/admin', request.nextUrl));
-
-  console.log('User data:', user);
-  return response;
 }
 
 // write일때만 작동 -> 안됨.. .

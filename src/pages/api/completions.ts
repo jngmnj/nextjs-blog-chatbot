@@ -92,7 +92,7 @@ export default async function handler(
       messages.push(responseMessage);
     }
     // messages.push(response.choices[0].message);
-    console.log(messages);
+    // console.log(messages);
   }
   res.status(200).json({ messages });
 }

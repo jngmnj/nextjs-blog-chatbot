@@ -57,6 +57,5 @@ export const createClient = (request: NextRequest) => {
       },
     },
   );
-  console.log('Supabase client created:', supabase);
   return { supabase, response };
 };

@@ -23,7 +23,7 @@ export const useTags = () =>
             try {
               return JSON.parse(d.tags);
             } catch (e) {
-              console.log('Error', e);
+              // console.log('Error', e);
               return [];
             }
           }),

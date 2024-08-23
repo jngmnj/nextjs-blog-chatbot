@@ -9,7 +9,7 @@ export type MessageProps = {
   posts?: Omit<PostCardProps, 'className'>[];
 };
 const Message: FC<MessageProps> = ({ content, role, posts }) => {
-  console.log('Message:', posts);
+  // console.log('Message:', posts);
   return (
     <div
       className={cn('p-4 lg:p-6', role === 'user' ? 'bg-white' : 'bg-gray-100')}

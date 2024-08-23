@@ -63,7 +63,7 @@ const Write = () => {
       // post성공시 해당 post로 redirect
       if (data.id) router.push(`/posts/${data.id}`);
     } catch (error) {
-      console.error('Error creating post:', error);
+      // console.error('Error creating post:', error);
       alert('글 작성에 실패했습니다.');
     }
   };
